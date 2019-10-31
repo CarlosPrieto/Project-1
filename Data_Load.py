@@ -32,5 +32,3 @@ def dataLoad(filename):
     N=int(np.size(dataArray)/3)
     data=np.reshape(dataArray,[N,3])
     return data
-
-print(dataLoad("test.txt"))

@@ -30,18 +30,18 @@ def dataStatistics(data, statistic):
         totaltemperature=sumofcolumns.item(0)
         result=totaltemperature/numberofrows
     
-    if Statistic=='mean growth rate':
+    elif Statistic=='mean growth rate':
         totalgrowthrate=sumofcolumns.item(1)
         result=totalgrowthrate/numberofrows
         
-    if Statistic=='std temperature':
+    elif Statistic=='std temperature':
         totaltemperature=sumofcolumns.item(0)
         averagetemperature=totaltemperature/numberofrows
         for i in range(numberofrows):
             sumofthings+=((data.item(0)-averagetemperature)**2)
         result=math.sqrt(sumofthings/numberofrows)
         
-    if Statistic=='std growth rate':
+    elif Statistic=='std growth rate':
         totalgrowthrate=sumofcolumns.item(1)
         avearagegrowth=totalgrowthrate/numberofrows
         for i in range(numberofrows):
@@ -49,17 +49,17 @@ def dataStatistics(data, statistic):
         result=math.sqrt(sumofthings/numberofrows)
         
     
-    if Statistic=='rows':
+    elif Statistic=='rows':
         result=numberofrows
         
-    if Statistic=='mean cold growth rate':
+    elif Statistic=='mean cold growth rate':
         for i in range(numberofrows):
             if data[i,0]<20:
                 coldgrowthrate=coldgrowthrate+data[i,1]
                 totalnumbers=totalnumbers+1
         result=coldgrowthrate/totalnumbers
         
-    if Statistic=='mean hot growth rate':
+    elif Statistic=='mean hot growth rate':
         for i in range(numberofrows):
             if data[i,0]>20:
                 hotgrowthrate=hotgrowthrate+data[i,1]

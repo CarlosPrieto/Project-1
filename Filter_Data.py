@@ -2,11 +2,7 @@ import numpy as np
 def filterData(data, Bacteria, minRate, maxRate):
     #Need to decide if Bacteria is an int or a string and if multiple can be passed through
     #check if Bacteria contains info
-    data = data[data[:,2] == Bacteria]
-    #check if minRate contains info
-    data = data[data[:,1] > minRate]
-    #check if maxRate contains info
-    data = data[data[:,1] < maxRate]
+    
     print(data)
     return data
 

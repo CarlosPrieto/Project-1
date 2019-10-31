@@ -31,3 +31,4 @@ def callFunction():
     if numberInput == 5:
         #Quit
     return
+
