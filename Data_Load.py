@@ -9,14 +9,18 @@ import numpy as np
 
 def dataLoad(filename):
     #Import file as array split in rows
-    fileIn=open(filename,"r")
+    try:
+        fileIn=open(filename,"r")
+    except FileNotFoundError:
+        print("Please input an existing text file")
+        return np.array([["nothing","nothing"],["nothing","nothing"]])
     rawData=fileIn.read().split("\n")
     #Check intervals/values of numbers in the rows
     dataArray=[]
     bacteriaTypes=np.arange(1,5)
     for i in range(0,np.size(rawData)):
         line=rawData[i].split(" ")
-        if (10<=float(line[0]) and float(line[0])<=60) and (0<float(line[1])) and (np.any(bacteriaTypes==float(line[2]))==True) and (np.size(line)==3):
+        if (float(line[0])>=10 and float(line[0])<=60) and (float(line[1])>0) and (np.any(bacteriaTypes==float(line[2]))==True) and (np.size(line)==3):
             dataArray.extend([float(line[0]),float(line[1]),float(line[2])])
         #print fitting error-message
         else:
