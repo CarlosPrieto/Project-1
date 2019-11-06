@@ -13,17 +13,18 @@ while True:
                 break
             except ValueError:
                 print("Input an existing text file")
-            originalData = data
+        #originalData is defined to be able to remove filters in the filter section
+        originalData = data
         
     elif function == 2:
-        if data.any(data == "nothing") == False:
+        if np.any(data == "nothing") == False:
             while True:
                 option = int(input("0. Remove filters\n1. Bacteria name\n2. Growth Rate\n3. Exit\nChoose a filter\n"))
                 if option == 0:
                     data = originalData
                 elif option == 1:
-                    Bacteria = int(input("1. Salmonella enterica\n2. Bacillus cereus\n3. Listeria\n4. Brochothrix thermosphacta\nChoose a bacteria\n"))
-                    data = data[data[:,2] == Bacteria]
+                    bacteria = int(input("1. Salmonella enterica\n2. Bacillus cereus\n3. Listeria\n4. Brochothrix thermosphacta\nChoose a bacteria\n"))
+                    data = data[data[:,2] == bacteria]
                 elif option == 2:
                     minRate = float(input("Input a minimum growth rate\n"))
                     maxRate = float(input("Input a maximum growth rate\n"))
