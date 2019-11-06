@@ -12,7 +12,7 @@ def dataLoad(filename):
     try:
         fileIn=open(filename,"r")
     except FileNotFoundError:
-        print("Please input an existing text file")
+        print("\nPlease input an existing text file")
         return np.array([["nothing","nothing"],["nothing","nothing"]])
     rawData=fileIn.read().split("\n")
     #Check intervals/values of numbers in the rows
