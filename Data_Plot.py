@@ -7,6 +7,10 @@ def dataPlot(data): #Recieves a N x 3 matrix with Temperature, Growth rate and B
     bac2 = data[data[:,2] == 2]
     bac3 = data[data[:,2] == 3]
     bac4 = data[data[:,2] == 4]
+    bac1 = bac1[bac1[:,0].argsort()]
+    bac2 = bac2[bac2[:,0].argsort()]
+    bac3 = bac3[bac3[:,0].argsort()]
+    bac4 = bac4[bac4[:,0].argsort()]
 
     #Plots the size of each of the arrays that were just defined with a bar chart
     plt.bar(np.arange(1,5),np.array([np.size(bac1,axis=0),np.size(bac2,axis=0),np.size(bac3,axis=0),np.size(bac4,axis=0)]), width=0.75)
@@ -31,5 +35,3 @@ def dataPlot(data): #Recieves a N x 3 matrix with Temperature, Growth rate and B
     plt.ylim(0)
     plt.show()
     return
-
-#dataPlot(np.array([[10,0.2,1],[20,0.43,1],[30,0.57,1],[40,0.85,1],[49,0.8,1],[5,0.15,2],[15,0.45,2],[25,0.75,2],[70,0.3,3],[60,0.5,3],[50,0.7,3],[40,0.9,3],[30,0.4,4],[40,0.4,4],[60,0.4,4],[80,0.4,4]]))
