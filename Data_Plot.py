@@ -7,7 +7,7 @@ def dataPlot(data): #Recieves a N x 3 matrix with Temperature, Growth rate and B
     bac2 = data[data[:,2] == 2]
     bac3 = data[data[:,2] == 3]
     bac4 = data[data[:,2] == 4]
-    bac1 = bac1[bac1[:,0].argsort()]
+    bac1 = bac1[bac1[:,0].argsort()] #https://gist.github.com/stevenvo/e3dad127598842459b68
     bac2 = bac2[bac2[:,0].argsort()]
     bac3 = bac3[bac3[:,0].argsort()]
     bac4 = bac4[bac4[:,0].argsort()]
