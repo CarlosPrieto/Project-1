@@ -11,6 +11,10 @@ while True:
         data = dataLoad(str(input("Input the name of the text file\n")))
         #originalData is defined to be able to remove filters in the filter section
         originalData = data
+        #Checks if dataLoad gave an error and ignored every single line of data, making data an empty array
+        if np.size(data) == 0:
+            print("\nPlease choose a text file with data within the requirements")
+            data = np.array([["nothing","nothing"],["nothing","nothing"]])
         
     elif function == "2":
         #Check if data has been defined yet, comparing with a value that was set at the beginning, same is used for options 3 and 4
@@ -20,30 +24,35 @@ while True:
                 option = str(input("0. Remove filters\n1. Bacteria name\n2. Growth Rate\n3. Exit\nChoose a filter\n"))
                 if option == "0":
                     data = originalData
+                
                 elif option == "1":
-                    bacteria = str(input("1. Salmonella enterica\n2. Bacillus cereus\n3. Listeria\n4. Brochothrix thermosphacta\nChoose a bacteria\n"))
+                    bacteria = str(input("1. Salmonella enterica\n2. Bacillus cereus\n3. Listeria\n4. Brochothrix thermosphacta\nChoose a bacteria to filter out\n"))
                     if bacteria == "1" or bacteria == "2" or bacteria == "3" or bacteria == "4":
-                        data = data[data[:,2] == int(bacteria)]
+                        temporaryData = data
+                        data = data[data[:,2] != int(bacteria)]
+                        #Make sure that the filter isn't filtering out every value, as this would cause an error for other functions
+                        if np.size(data) == 0:
+                            data = temporaryData
+                            print("This would filter out all data, please choose a different filter")
                     else:
                         print("\nA number between 1 and 4 was not input")
+                
                 elif option == "2":
                     while True:
                         try:
                             minRate = float(input("Input a minimum growth rate\n"))
-                            break
-                        except ValueError:
-                            print("\nPlease input valid growth rate")
-                    while True:
-                        try:
                             maxRate = float(input("Input a maximum growth rate\n"))
                             break
                         except ValueError:
                             print("\nPlease input valid growth rate")
-                    if minRate<maxRate:
-                        data = data[data[:,1] > minRate]     
-                        data = data[data[:,1] < maxRate]
-                    else:
-                        print("\nPlease choose a maximum growth rate that is larger than the minimum growth rate")
+                    temporaryData = data
+                    data = data[data[:,1] > minRate]
+                    data = data[data[:,1] < maxRate]
+                    #Make sure that the filter isn't filtering out every value, as this would cause an error for other functions
+                    if np.size(data) == 0:
+                        data = temporaryData
+                        print("These values would filter out all data, please choose different growth rate values")
+                
                 elif option == "3":
                     break
                 else:
@@ -53,12 +62,15 @@ while True:
             
     elif function == "3":
         if data[0][0] != "nothing":
-            statistic = str(input("Options:\nMean Temperature\nMean Growth rate\nStd Temperature\nStd Growth rate\nRows\nMean Cold Growth rate\nMean Hot Growth rate\n \nType in the name of the desired statistic:\n"))
-            #"0" is passed from the dataStatistics function if a correct statistic name is not input
-            if str(dataStatistics(data,statistic)) != "0":
-                print("The " + statistic + " is {:g}".format(dataStatistics(data,statistic)))
-            else:
-                print('Please input a valid statistic')
+            while True:
+                statistic = str(input("Options:\nMean Temperature\nMean Growth rate\nStd Temperature\nStd Growth rate\nRows\nMean Cold Growth rate\nMean Hot Growth rate\nExit\n\nType in the name of the desired statistic:\n"))
+                #"0" is passed from the dataStatistics function if a correct statistic name is not input
+                if statistic == "exit":
+                    break
+                if str(dataStatistics(data,statistic)) != "0": ## Keep inside the statistics function and ask for a string again (while)1
+                    print("The " + statistic + " is {:g}".format(dataStatistics(data,statistic)))
+                else:
+                    print('Please input a valid statistic')
         else:
             print("\nPLEASE LOAD DATA FIRST")
             
