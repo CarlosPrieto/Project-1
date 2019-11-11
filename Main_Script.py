@@ -4,6 +4,8 @@ from Data_Statistics import dataStatistics
 from Data_Plot import dataPlot
 
 data = np.array([["nothing","nothing"],["nothing","nothing"]])
+nameFilters = ""
+growthFilters = ""
 while True:
     #\n is used to separate options as well as to allow input on a new line, to avoid confusing the user. This is used throughout the script
     function = str(input("1. Load Data\n2. Filter Data\n3. Display Statistics\n4. Generate Plots\n5. Quit\nChoose a function\n"))
@@ -24,10 +26,13 @@ while True:
                 option = str(input("0. Remove filters\n1. Bacteria name\n2. Growth Rate\n3. Exit\nChoose a filter\n"))
                 if option == "0":
                     data = originalData
+                    nameFilters = ""
+                    growthFilters = ""
                 
                 elif option == "1":
                     bacteria = str(input("1. Salmonella enterica\n2. Bacillus cereus\n3. Listeria\n4. Brochothrix thermosphacta\nChoose a bacteria to filter out\n"))
                     if bacteria == "1" or bacteria == "2" or bacteria == "3" or bacteria == "4":
+                        nameFilters += bacteria + ", "
                         temporaryData = data
                         data = data[data[:,2] != int(bacteria)]
                         #Make sure that the filter isn't filtering out every value, as this would cause an error for other functions
@@ -48,6 +53,7 @@ while True:
                     temporaryData = data
                     data = data[data[:,1] > minRate]
                     data = data[data[:,1] < maxRate]
+                    growthFilters = (str(minRate)+" < rate < "+str(maxRate))
                     #Make sure that the filter isn't filtering out every value, as this would cause an error for other functions
                     if np.size(data) == 0:
                         data = temporaryData
@@ -84,3 +90,4 @@ while True:
         break
     else:
         print("Please choose an avaliable option")
+    print("Current filters are:\nBacteria types:", nameFilters, "\nGrowth rate:", growthFilters)
