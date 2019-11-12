@@ -5,6 +5,7 @@ from Data_Plot import dataPlot
 
 data = np.array([["nothing","nothing"],["nothing","nothing"]])
 names = np.array(["Salmonella enterica","Bacillus cereus","Listeria","Brochothrix thermosphacta"])
+filtersOn = False
 while True:
     #\n is used to separate options as well as to allow input on a new line, to avoid confusing the user. This is used throughout the script
     function = str(input("1. Load Data\n2. Filter Data\n3. Display Statistics\n4. Generate Plots\n5. Quit\nChoose a function\n"))
@@ -29,6 +30,7 @@ while True:
                     data = originalData
                     nameFilters = np.zeros(4, dtype=bool)
                     growthFilters = ""
+                    filtersOn = False
                 
                 elif option == "1":
                     bacteria = str(input("1. Salmonella enterica\n2. Bacillus cereus\n3. Listeria\n4. Brochothrix thermosphacta\nChoose a bacteria to filter out\n"))
@@ -38,9 +40,10 @@ while True:
                         #Make sure that the filter isn't filtering out every value, as this would cause an error for other functions
                         if np.size(data) == 0:
                             data = temporaryData
-                            print("This would filter out all data, please choose a different filter")
+                            print("\nThis would filter out all data, please choose a different filter")
                         else:
                             nameFilters[int(bacteria)-1] = True
+                            filtersOn = True
                     else:
                         print("\nA number between 1 and 4 was not input")
                 
@@ -55,16 +58,19 @@ while True:
                     temporaryData = data
                     data = data[data[:,1] > minRate]
                     data = data[data[:,1] < maxRate]
-                    growthFilters = (str(minRate)+" < rate < "+str(maxRate))
                     #Make sure that the filter isn't filtering out every value, as this would cause an error for other functions
                     if np.size(data) == 0:
                         data = temporaryData
-                        print("These values would filter out all data, please choose different growth rate values")
+                        growthFilters = ""
+                        print("\nThese values would filter out all data, please choose different growth rate values")
+                    else:
+                        growthFilters = (str(minRate)+" < rate < "+str(maxRate))
+                        filtersOn = True
                 
                 elif option == "3":
                     break
                 else:
-                    print("Please choose an avaliable option")
+                    print("\nPlease choose an avaliable option")
         else:
             print("\nPLEASE LOAD DATA FIRST")
             
@@ -76,9 +82,9 @@ while True:
                 if statistic == "exit":
                     break
                 if str(dataStatistics(data,statistic)) != "0": ## Keep inside the statistics function and ask for a string again (while)1
-                    print("The " + statistic + " is {:g}".format(dataStatistics(data,statistic)))
+                    print("\nThe " + statistic + " is {:g}".format(dataStatistics(data,statistic)))
                 else:
-                    print('Please input a valid statistic')
+                    print('\nPlease input a valid statistic')
         else:
             print("\nPLEASE LOAD DATA FIRST")
             
@@ -91,5 +97,9 @@ while True:
     elif function == "5":
         break
     else:
-        print("Please choose an avaliable option")
-    print("Current filters are:\nBacteria types:", names[nameFilters], "\nGrowth rate:", growthFilters)
+        print("\nPlease choose an avaliable option")
+    
+    if filtersOn == True:
+        print("\nCurrent filters are:\nBacteria types removed:", names[nameFilters], "\nGrowth rate:", growthFilters)
+    elif filtersOn == False:
+        print("\nNo current filters are active")
