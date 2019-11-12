@@ -13,6 +13,7 @@ while True:
         data = dataLoad(str(input("Input the name of the text file\n")))
         nameFilters = np.zeros(4, dtype=bool)
         growthFilters = ""
+        filtersOn = False
         #originalData is defined to be able to remove filters in the filter section
         originalData = data
         #Checks if dataLoad gave an error and ignored every single line of data, making data an empty array
@@ -99,6 +100,7 @@ while True:
     else:
         print("\nPlease choose an avaliable option")
     
+    #Display current filters
     if filtersOn == True:
         print("\nCurrent filters are:\nBacteria types removed:", names[nameFilters], "\nGrowth rate:", growthFilters)
     elif filtersOn == False:
